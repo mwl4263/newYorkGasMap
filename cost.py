@@ -1,7 +1,7 @@
 import turtle
 import csv
 import pandas as pd
-cities = {"rochester": (-99, 27), "buffalo": (-163, 7), "syracuse": (-16, 19), "watertown": (-10, 70), "utica": (32, 23), "glens_falls": (116, 38), "ithaca": (-40, -25), "albany": (106, -9), "elmira": (-53, -50), "binghamton": (-4, -49), "kingston": (99,-68), "nyc": (97, -149)}
+cities = {"rochester": (-99, 27), "buffalo": (-163, 7), "syracuse": (-16, 19), "watertown": (-10, 70), "utica": (32, 23), "glens_falls": (116, 38), "ithica": (-40, -25), "albany": (106, -9), "elmira": (-53, -50), "binghamton": (-4, -49), "kingston": (99,-68), "nyc": (97, -149)}
 	
 def getChords(x, y):
 	#  This is a helper function to show coordinates as a click method.
@@ -30,21 +30,36 @@ def openFile(filename):
 			lowerList += spdata
 			finList += [lowerList]
 		last = finList[0][0]
+		
+		turtle.color("black")
+		turtle.goto(-200, 100)
+		turtle.down()
+		turtle.write(last)
+		turtle.up()
 		for j in finList:
 			print(j)
 			if last != j[0]:
 				last = j[0]
 				break
-			radius = 20 - ((3 - float(j[1]))*50)
+			radius = -(3 - (float(j[1]))*10)
+			radius = abs((21 - radius)*5)
+			radius = (21 - radius)*1.5
 			if j[3] in cities:
 				toCity(j[3])
+				turtle.color("red")
 				turtle.showturtle()
 				turtle.right(90)
 				turtle.forward(radius)
-				print(radius)
+				print(str(j[1]) + " -- " +str(radius))
 				turtle.right(270)
 				turtle.down()
 				turtle.circle(radius)
+				turtle.up()
+				turtle.forward(20)
+				turtle.down()
+				turtle.write(str(j[1]))
+				turtle.up()
+				turtle.backward(20)
 				turtle.up()
 				turtle.home()
 				turtle.hideturtle()
