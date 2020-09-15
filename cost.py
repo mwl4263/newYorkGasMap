@@ -38,7 +38,7 @@ def gasPricesCalc(finList):
 			# This os.system command WILL NOT work on other computers.
 			# The line below is meant to generate png images based on what the program highlights gas prices.
 			# It requires extra dependencies that are needed via linux 
-			# os.system('sleep 1s && import -window "$(xdotool getactivewindow)" ~/Documents/gasData/frames/' + j[0] + ".png")
+			#os.system('sleep 1s && import -window "$(xdotool getactivewindow)" ~/Documents/gasData/frames/' + j[0] + ".png")
 			last = j[0]
 			lastOil =j[2]
 			turtle.reset()
