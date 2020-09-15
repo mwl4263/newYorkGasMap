@@ -12,6 +12,98 @@ def toCity(cityname):
 	# plops the turtle on the city according to the name of the city
 	turtle.goto(cities[cityname][0], cities[cityname][1])
 	
+	
+def gasPricesCalc(finList):
+	last = finList[0][0]
+	turtle.color("black")
+	turtle.goto(-200, 100)
+	turtle.down()
+	turtle.write(last)
+	turtle.up()
+	turtle.goto(-300, 150)
+	turtle.down()
+	turtle.pensize(10)
+	turtle.forward(abs(float(finList[0][2]))*5)
+	turtle.pensize(1)
+	turtle.up()
+	turtle.forward(10)
+	turtle.down()
+	turtle.write(str(finList[0][2]))
+	turtle.up()
+	negative = False
+	barLength = 0
+	for j in finList:
+		print(j)
+		if last != j[0]:
+			# This os.system command WILL NOT work on other computers.
+			# The line below is meant to generate png images based on what the program highlights gas prices.
+			# It requires extra dependencies that are needed via linux 
+			# os.system('sleep 1s && import -window "$(xdotool getactivewindow)" ~/Documents/gasData/frames/' + j[0] + ".png")
+			last = j[0]
+			lastOil =j[2]
+			turtle.reset()
+			turtle.speed(0)
+			turtle.showturtle()
+			turtle.up()
+			turtle.bgpic("bg.png")
+			turtle.color("black")
+			turtle.goto(-200, 100)
+			turtle.down()
+			turtle.write(last)
+			turtle.up()
+			turtle.goto(-300, 150)
+			turtle.down()
+			if float(lastOil) == -999.0:
+				barLength = 0
+			elif float(lastOil) < 0:
+				negative = True
+			else:	
+				barLength = abs(float(lastOil))*5
+			turtle.pensize(10)
+			turtle.forward(barLength)
+			turtle.pensize(1)
+			if negative == True:
+				turtle.up()
+				turtle.forward(10)
+				turtle.down()
+				turtle.write(str(lastOil))
+				turtle.up()
+				turtle.forward(40)
+				turtle.down()
+				turtle.write("(negative)")
+				turtle.up()
+				negative = False
+			else:
+				turtle.up()
+				turtle.forward(10)
+				turtle.down()
+				turtle.write(str(lastOil))
+				turtle.up()
+			continue
+		radius = -(3 - (float(j[1]))*10)
+		radius = abs((21 - radius)*5)
+		radius = (21 - radius)*1.5
+		if j[3] in cities:
+			toCity(j[3])
+			turtle.color("red")
+			turtle.showturtle()
+			turtle.right(90)
+			turtle.forward(radius)
+			print(str(j[1]) + " -- " +str(radius))
+			turtle.right(270)
+			turtle.down()
+			turtle.circle(radius)
+			turtle.up()
+			turtle.forward(-35)
+			turtle.down()
+			turtle.write(str(j[1]))
+			turtle.up()
+			turtle.backward(-35)
+			turtle.up()
+			turtle.home()
+			turtle.hideturtle()
+			
+
 def openFile(filename):
 	with open(filename, "r") as f:
 		dataList = f.read().strip()
@@ -29,56 +121,8 @@ def openFile(filename):
 			spdata = y.split(",")
 			lowerList += spdata
 			finList += [lowerList]
-		last = finList[0][0]
+		gasPricesCalc(finList)
 		
-		turtle.color("black")
-		turtle.goto(-200, 100)
-		turtle.down()
-		turtle.write(last)
-		turtle.up()
-		for j in finList:
-			print(j)
-			if last != j[0]:
-				# This os.system command WILL NOT work on other computers.
-				# The line below is meant to generate png images based on what the program highlights gas prices.
-				# It requires extra dependencies that are needed via linux 
-
-				#os.system('sleep 1s && import -window "$(xdotool getactivewindow)" ~/Documents/gasData/frames/' + j[0] + ".png")
-				last = j[0]
-
-				turtle.reset()
-				turtle.speed(0)
-				turtle.showturtle()
-				turtle.up()
-				turtle.bgpic("bg.png")
-				turtle.color("black")
-				turtle.goto(-200, 100)
-				turtle.down()
-				turtle.write(last)
-				turtle.up()
-				continue
-			radius = -(3 - (float(j[1]))*10)
-			radius = abs((21 - radius)*5)
-			radius = (21 - radius)*1.5
-			if j[3] in cities:
-				toCity(j[3])
-				turtle.color("red")
-				turtle.showturtle()
-				turtle.right(90)
-				turtle.forward(radius)
-				print(str(j[1]) + " -- " +str(radius))
-				turtle.right(270)
-				turtle.down()
-				turtle.circle(radius)
-				turtle.up()
-				turtle.forward(-35)
-				turtle.down()
-				turtle.write(str(j[1]))
-				turtle.up()
-				turtle.backward(-35)
-				turtle.up()
-				turtle.home()
-				turtle.hideturtle()
 				
 		
 
@@ -93,7 +137,6 @@ def main():
 	turtle.bgpic("bg.png")
 	toCity("syracuse")
 	openFile("gas.txt")
-
 	#turtle.onscreenclick(getChords)
 	turtle.mainloop()
 	turtle.done()
