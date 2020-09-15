@@ -1,7 +1,7 @@
 import turtle
 import csv
 import pandas as pd
-cities = {"rochester": (-99, 27), "buffalo": (-163, 7), "syracuse": (-16, 19), "watertown": (-10, 70), "utica": (32, 23), "glens_falls": (116, 38), "ithaca": (-40, -25), "albany": (106, -9), "elmira": (-53, -50), "binghamton": (-4, -49), "kingston": (0,0), "nyc": (97, -149)}
+cities = {"rochester": (-99, 27), "buffalo": (-163, 7), "syracuse": (-16, 19), "watertown": (-10, 70), "utica": (32, 23), "glens_falls": (116, 38), "ithaca": (-40, -25), "albany": (106, -9), "elmira": (-53, -50), "binghamton": (-4, -49), "kingston": (99,-68), "nyc": (97, -149)}
 	
 def getChords(x, y):
 	#  This is a helper function to show coordinates as a click method.
@@ -13,29 +13,57 @@ def toCity(cityname):
 	turtle.goto(cities[cityname][0], cities[cityname][1])
 	
 def openFile(filename):
-	mycsv = pd.read_csv(filename)
-	print(mycsv)
-	lineCount = 0
-	rowCount = 0
-	importantRows = []
-	for x in mycsv:
-		for i in cities:
-			if i in x:
-				print(x)
-	for row in mycsv.iter
+	with open(filename, "r") as f:
+		dataList = f.read().strip()
+		dataList = dataList.split("\n")
+		newList = []
+		lowerList = []
+		finList = []
+		for x in dataList:
+			#print(x)
+			down = x.split("\n")
+			newList += down
+		#print(newList)
+		for y in newList:
+			lowerList = []
+			spdata = y.split(",")
+			lowerList += spdata
+			finList += [lowerList]
+		last = finList[0][0]
+		for j in finList:
+			print(j)
+			if last != j[0]:
+				last = j[0]
+				break
+			radius = 20 - ((3 - float(j[1]))*50)
+			if j[3] in cities:
+				toCity(j[3])
+				turtle.showturtle()
+				turtle.right(90)
+				turtle.forward(radius)
+				print(radius)
+				turtle.right(270)
+				turtle.down()
+				turtle.circle(radius)
+				turtle.up()
+				turtle.home()
+				turtle.hideturtle()
+				
 		
-			
 
 def main():
 	print("Setting turtle stuff")
 	screen = turtle.Screen()
 	screen.setup(600, 400)
+	turtle.speed(0)
 	turtle.showturtle()
 	turtle.up()
 	turtle.pencolor("red")
 	turtle.bgpic("bg.png")
-	toCity("Syracuse")
-	openFile("data.csv")
-	screen.mainloop()
+	toCity("syracuse")
+	openFile("gas.txt")
+
+	#turtle.onscreenclick(getChords)
+	turtle.mainloop()
 	turtle.done()
 main()
