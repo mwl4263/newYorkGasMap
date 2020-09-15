@@ -1,6 +1,6 @@
 import turtle
 import csv
-import pandas as pd
+import os 
 cities = {"rochester": (-99, 27), "buffalo": (-163, 7), "syracuse": (-16, 19), "watertown": (-10, 70), "utica": (32, 23), "glens_falls": (116, 38), "ithica": (-40, -25), "albany": (106, -9), "elmira": (-53, -50), "binghamton": (-4, -49), "kingston": (99,-68), "nyc": (97, -149)}
 	
 def getChords(x, y):
@@ -39,8 +39,24 @@ def openFile(filename):
 		for j in finList:
 			print(j)
 			if last != j[0]:
+				# This os.system command WILL NOT work on other computers.
+				# The line below is meant to generate png images based on what the program highlights gas prices.
+				# It requires extra dependencies that are needed via linux 
+
+				#os.system('sleep 1s && import -window "$(xdotool getactivewindow)" ~/Documents/gasData/frames/' + j[0] + ".png")
 				last = j[0]
-				break
+
+				turtle.reset()
+				turtle.speed(0)
+				turtle.showturtle()
+				turtle.up()
+				turtle.bgpic("bg.png")
+				turtle.color("black")
+				turtle.goto(-200, 100)
+				turtle.down()
+				turtle.write(last)
+				turtle.up()
+				continue
 			radius = -(3 - (float(j[1]))*10)
 			radius = abs((21 - radius)*5)
 			radius = (21 - radius)*1.5
@@ -55,11 +71,11 @@ def openFile(filename):
 				turtle.down()
 				turtle.circle(radius)
 				turtle.up()
-				turtle.forward(20)
+				turtle.forward(-35)
 				turtle.down()
 				turtle.write(str(j[1]))
 				turtle.up()
-				turtle.backward(20)
+				turtle.backward(-35)
 				turtle.up()
 				turtle.home()
 				turtle.hideturtle()
