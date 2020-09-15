@@ -136,12 +136,12 @@ def gasPricesCalc(finList):
 				turtle.down()
 				turtle.write(str(lastOil))
 				turtle.up()
-			
 			continue
 		radius = -(3 - (float(j[1]))*10)
 		radius = abs((21 - radius)*5)
 		radius = (21 - radius)*1.5
 		if j[3] in cities:
+			print(j[0][1:11] + "," + j[1] + "," + j[2] + "," + j[3])
 			toCity(j[3])
 			turtle.color("red")
 			turtle.showturtle()
