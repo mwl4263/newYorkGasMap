@@ -42,7 +42,7 @@ def gasPricesCalc(finList):
 			turtle.goto(-270, 170)
 			turtle.color("black")
 			turtle.down()
-			turtle.write("Oil Barrel Price")
+			#turtle.write("Oil Barrel Price")
 			turtle.up()
 			# This os.system command WILL NOT work on other computers.
 			# The line below is meant to generate png images based on what the program highlights gas prices.
